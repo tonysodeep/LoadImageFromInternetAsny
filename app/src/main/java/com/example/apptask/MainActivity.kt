@@ -26,6 +26,7 @@ import java.util.jar.Manifest
 class MainActivity : AppCompatActivity(), ClickEvent {
     var loadURLImage: LoadURLImage = LoadURLImage()
     lateinit var imageUrl: Bitmap
+    internal var number: String? = ""
     var permission = arrayOf(
         android.Manifest.permission.READ_EXTERNAL_STORAGE,
         android.Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -34,7 +35,14 @@ class MainActivity : AppCompatActivity(), ClickEvent {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        //bt call click handel
+        bt_call.setOnClickListener {
+            //get input from user
+            number = et_phone.text.toString().trim()
+            //Dialer intent
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel: "+Uri.encode(number)))
+            startActivity(Intent.createChooser(intent,"Who you want to call? "))
+        }
 
         bt_xuly.setOnClickListener {
             loadURLImage.setInterface(this)
